@@ -1,3 +1,24 @@
+
+// Constant: O(1) or O(c) - constant number of operations
+// Linear: O(n) n is proportional to number of data points
+// Quadratic: O(n^2) Number of operations are proportional to the square of the problem size
+// Logarithmic: O(log n) Multiplying the problem size by constant adds the same number of operations. Q. How many times do i have to divide c by 2 to reach 1?
+// Exponential: O(c^n) c - number of options, n - problem size
+
+
+
+// How to determine n:
+//   1. determine what variables represtent problem size (this is n)
+//   2. Write numbers of operations in terms of n
+//     - lines in series are added
+//     - lines nested are multiplied
+//   3. Find leading termn and drop coefficicents
+
+// Native JS methods:
+//   1. check the polyfill, how would you write it?
+//   2. Recursive functions: draw a decision tree)
+
+
 /////////// Prompt 1 ///////////
 /////////// time complexity: 
 function findMax(array){
@@ -10,81 +31,104 @@ function findMax(array){
   return max; 
 }
 
+// (1(1+1)*n) + 1 + 1 =2n + 2 => O(n) or linear
+
 
 /////////// Prompt 2 ///////////
 /////////// time complexity: 
 function contains(array, target){
-  return array.indexOf(target) > -1;
+  return array.indexOf(target) > -1; // n 
 }
+
+// indexOf -> iterates over an array 
+// O(n) linear
 
 
 /////////// Prompt 3 ///////////
 /////////// time complexity: 
 function partialContains(array, target, start){
-  return array.slice(start).indexOf(target) > -1;
+  return array.slice(start).indexOf(target) > -1; // slice: n, indexOf: n 
 }
+
+// n is array length
+// n + n becuase it's chained, not nested
+// 2(n) -> O(n) linear
 
 
 /////////// Prompt 4 ///////////
 /////////// time complexity: 
 function square(array){
-  for (var i = 0; i < 3; i++){
-    array[i] = array[i] * array[i];
+  for (var i = 0; i < 3; i++){        // 3 or constant
+    array[i] = array[i] * array[i];   // 1
   }
-  return array;
+  return array; // 1
 }
+
+// n is array length - doesn't matter really as n is lost/irrelevant
+// O(1), O(c) constant
+
 
 /////////// Prompt 5 ///////////
 /////////// time complexity: 
 function repeat(array){
-  var repeat = [];
-  for (var j = 0; j < 10; j++){
-    repeat[j] = [];
-    for (var i = 0; i < array.length; i++){
-      repeat[j].push(array[i]);
+  var repeat = [];                  // 1
+  for (var j = 0; j < 10; j++){     // 1
+    repeat[j] = [];                 // 1
+    for (var i = 0; i < array.length; i++){ // n linear
+      repeat[j].push(array[i]); // 1
     }
   }
   return repeat; 
 }
 //what if we replace 10 with a parameter? 
+// unshift is linear, but push is constant
+// n is array length
+// ((1 * n) + 1) * 10 --> O(n) linear
 
 
 /////////// Prompt 6 ///////////
 /////////// time complexity: 
 function gcf(num1, num2){
   if (num1 > num2){ //this ensures num1 is the smaller number
-    var temp = num1;
+    var temp = num1;  // 1...
     num1 = num2;
     num2 = temp;
   }
-  for (var i = num1; i > 1; i--){
-    if (num1 % i === 0 && num2 % i === 0){
+  for (var i = num1; i > 1; i--){             // n - dictated by size of num1
+    if (num1 % i === 0 && num2 % i === 0){    // 2
       return i;
     }
   }
   return 1;
 }
 
+// n is the smaller of num1 or num2
+// O(n) linear
+
 
 /////////// Prompt 7 ///////////
 /////////// time complexity: 
 function countChar(string){
-  var counts = {};
-  var currChar, currCharCount;
-  for (var i = 0; i < string.length; i++){
-    currChar = string[i];
-    currCharCount = 1;
-    for (var j = i+1; j < string.length; j++){
-      if (currChar === string[j]){
-        currCharCount++;
+  var counts = {}; //1
+  var currChar, currCharCount; //1
+  for (var i = 0; i < string.length; i++){ // n
+    currChar = string[i]; // 1
+    currCharCount = 1; // 1
+    for (var j = i+1; j < string.length; j++){ // n - j
+      if (currChar === string[j]){ //1
+        currCharCount++; //1
       }
     }
-    if (!counts.hasOwnProperty(currChar)){
-      counts[currChar] = currCharCount;
+    if (!counts.hasOwnProperty(currChar)){ // 1
+      counts[currChar] = currCharCount; //1
     }
   }
-  return counts;
+  return counts; //1
 }
+
+// n is string length
+// 3 + (n - j)
+
 
 
 /////////// Prompt 8 ///////////
@@ -99,6 +143,8 @@ var factorial = function(num){
     return num * factorial(num-1);
   }
 }
+
+// O(n) linear - depends on the the size of the number as to how many n
 
 
 /////////// Prompt 9 ///////////
@@ -118,6 +164,7 @@ function tournament(players){
   }
 }
 
+// O(log n) Logarithmic. Dividing by the same number each time. Tree
 
 
 /////////// Prompt 10 ///////////
@@ -139,6 +186,10 @@ function allPasswords(allowedChars, maxLength){
   findPassword([]);
   return results;
 }
+
+// O(c^n) exponential
+// c = number of characters in the alphabet
+// n = max number of characters in password
 
 
 /////////// Prompt 11 ///////////
@@ -186,6 +237,7 @@ function findColor(quadTree, coordinates){
   }
 }
 
+// log base 4
 
 
 /////////// Bonus! ///////////
